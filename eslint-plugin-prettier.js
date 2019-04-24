@@ -163,9 +163,12 @@ module.exports = {
                 })
               : null;
 
-            const prettierFileInfo = prettier.getFileInfo.sync(filepath, {
-              ignorePath: '.prettierignore'
-            });
+            const prettierFileInfo = prettier.getFileInfo.sync(
+              filepath,
+              Object.assign({}, eslintPrettierOptions, {
+                ignorePath: '.prettierignore'
+              })
+            );
 
             // Skip if file is ignored using a .prettierignore file
             if (prettierFileInfo.ignored) {

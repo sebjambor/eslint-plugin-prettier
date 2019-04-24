@@ -49,6 +49,11 @@ ruleTester.run('prettier', rule, {
       code: `("");\n`,
       filename: getPrettierRcJsFilename('single-quote', 'ignore-me.js')
     },
+    // ignores files under node_modules by default
+    {
+      code: `('');\n`,
+      filename: getPrettierRcJsFilename('node_modules')
+    },
     // Sets a default parser when it can't be inferred from the file extensions
     {
       code: `('');\n`,
@@ -82,7 +87,15 @@ ruleTester.run('prettier', rule, {
     '15',
     '16',
     '17'
-  ].map(loadInvalidFixture)
+  ]
+    .map(loadInvalidFixture)
+    .concat([
+      // files under node_modules are checked if withNodeModules is passed
+      // through options
+      Object.assign(loadInvalidFixture('with-node-modules'), {
+        filename: getPrettierRcJsFilename('node_modules')
+      })
+    ])
 });
 
 const vueRuleTester = new RuleTester({

@@ -1,2 +1,3 @@
 node_modules/
+!test/prettierrc/node_modules
 npm-debug.log
